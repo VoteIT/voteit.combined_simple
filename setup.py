@@ -36,6 +36,8 @@ setup(name='voteit.combined_simple',
       tests_require= requires,
       test_suite="voteit.combined_simple",
       entry_points = """\
+      [fanstatic.libraries]
+      combined_simple = voteit.combined_simple.fanstaticlib:cs_lib
       """,
       message_extractors = { '.': [
               ('**.py',   'lingua_python', None ),
