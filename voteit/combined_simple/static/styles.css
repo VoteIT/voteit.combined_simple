@@ -1,0 +1,53 @@
+.yes_no_abstain_widget .listing_block {
+    border: 0px;
+}
+.yes_no_abstain_widget input[type="radio"] {
+    display: none;
+}
+
+.yes_no_abstain_widget .votecontrol {
+    float: right;
+    padding: 3px 5px 3px 20px;
+    width: 90px;
+    border: 1px solid #5c5a5d;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.yes_no_abstain_widget .selected.votecontrol {
+    background-color: #5c5a5d !important;
+    color: #fff;
+}
+.yes_no_abstain_widget .votecontrol.yes,
+.combined_simple_result .resultbox.yes {
+    background: url(/combined_simple_static/approved.png) no-repeat 3px 50%;
+}
+.yes_no_abstain_widget .votecontrol.no,
+.combined_simple_result .resultbox.no {
+    background: url(/combined_simple_static/denied.png) no-repeat 3px 50%;
+}
+.yes_no_abstain_widget .votecontrol.abstain,
+.combined_simple_result .resultbox.abstain {
+    background: url(/combined_simple_static/abstain.png) no-repeat 3px 50%;
+}
+.yes_no_abstain_widget .selected.votecontrol.yes {
+    background-image: url(/combined_simple_static/approved_menu.png);
+}
+.yes_no_abstain_widget .selected.votecontrol.no {
+    background-image: url(/combined_simple_static/denied_menu.png);
+}
+.yes_no_abstain_widget .selected.votecontrol.abstain {
+    background-image: url(/combined_simple_static/abstain_menu.png);
+}
+.combined_simple_result {
+    margin-top: 10px;
+}
+.combined_simple_result .resultbox {
+    width: 25%;
+    padding-left: 25px;
+    margin-left: -3px;
+    float: left;
+}

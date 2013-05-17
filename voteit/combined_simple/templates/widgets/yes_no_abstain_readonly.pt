@@ -3,7 +3,6 @@
     i18n:domain="voteit.combined_simple"
     tal:define="api field.widget.api;">
 <div id="${field.oid}" class="deformSet yes_no_abstain_widget col-65-35">
-    <input type="hidden" name="__start__" value="${field.name}:rename"/>
     <div class="column column-1">
         <tal:proposal 
             replace="structure api.render_single_view_component(api.context, api.request, 'proposal', 'block', brain=field.widget.proposal)">
@@ -12,20 +11,10 @@
     </div>
     <div class="column column-2">
         <tal:loop tal:repeat="choice field.widget.values">
-            <label for="${field.oid}-${repeat.choice.index}">${choice[1]}</label>
-            <input tal:attributes="checked choice[0] == cstruct;"
-                 type="radio"
-                 name="${field.oid}"
-                 disabled="true"
-                 title="${choice[1]}"
-                 value="${choice[0]}"
-                 id="${field.oid}-${repeat.choice.index}"/>
+            <span tal:attributes="class cstruct == choice[0] and 'selected votecontrol %s' % choice[0] or 'votecontrol %s' % choice[0]">${choice[1]}</span>
         </tal:loop>
+        <div>
     </div>
-    <input type="hidden" name="__end__"/>
     <div class="clear"><!-- --></div>
 </div>
-<script language="javascript" type="text/javascript">
-    //FIXME: Script to activate choice icons here
-</script>
 </tal:main>

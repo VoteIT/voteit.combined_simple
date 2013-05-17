@@ -64,6 +64,7 @@ class CombinedSimplePoll(PollPlugin):
         response['proposals'] = [get_metadata(x) for x in results]
         response['api'] = api
         response['context'] = self.context
+        response['complete'] = complete
         return render('templates/result.pt', response, request=request)
 
     def change_states_of(self):

@@ -2,11 +2,11 @@ from fanstatic import Group
 from fanstatic import Library
 from fanstatic import Resource
 
-
+from voteit.core.fanstaticlib import voteit_common_js
 
 cs_lib = Library('combined_simple', 'static')
 cs_styles = Resource(cs_lib, 'styles.css')
-cs_script = Resource(cs_lib, 'script.js')
+cs_script = Resource(cs_lib, 'script.js', depends = (voteit_common_js,))
 cs_group = Group((cs_styles, cs_script))
 
 

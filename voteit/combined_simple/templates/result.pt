@@ -1,10 +1,11 @@
 <tal:main xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="voteit.combined_simple">
 <div>
     <tal:iterate repeat="proposal proposals">
-        <div tal:define="result context.poll_result[proposal['uid']]" class="combined_simple_result">
-            <span><tal:trans i18n:translate="">Yes</tal:trans>: ${result['yes']}</span>
-            <span><tal:trans i18n:translate="">No</tal:trans>: ${result['no']}</span>
-            <span><tal:trans i18n:translate="">Abstain</tal:trans>: ${result['abstain']}</span>
+        <div tal:condition="complete" tal:define="result context.poll_result[proposal['uid']]" class="combined_simple_result">
+            <div class="resultbox yes"><tal:trans i18n:translate="">Yes</tal:trans>: ${result['yes']}</div>
+            <div class="resultbox no"><tal:trans i18n:translate="">No</tal:trans>: ${result['no']}</div>
+            <div class="resultbox abstain"><tal:trans i18n:translate="">Abstain</tal:trans>: ${result['abstain']}</div>
+            <div class="clear"><!-- --></div>
         </div>
         <tal:proposal
             replace="structure api.render_view_group(context, request, 'proposal', brain=proposal)">
