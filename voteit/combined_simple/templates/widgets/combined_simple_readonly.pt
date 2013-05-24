@@ -13,7 +13,6 @@
         <tal:loop tal:repeat="choice field.widget.values">
             <span tal:attributes="class cstruct == choice[0] and 'selected votecontrol %s' % choice[0] or 'votecontrol %s' % choice[0]">${choice[1]}</span>
         </tal:loop>
-        <div>
     </div>
     <div class="clear"><!-- --></div>
 </div>

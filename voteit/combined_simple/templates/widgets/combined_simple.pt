@@ -21,7 +21,6 @@
                  value="${choice[0]}"
                  id="${field.oid}-${repeat.choice.index}" />
         </tal:loop>
-        <div>
     </div>
     <input type="hidden" name="__end__"/>
     <div class="clear"><!-- --></div>
