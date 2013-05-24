@@ -47,16 +47,16 @@ class CombinedSimplePollTests(unittest.TestCase):
         p1_uid = ai['prop1'].uid
         p2_uid = ai['prop2'].uid
         v1 = Vote(creators = ['one'])
-        v1.set_vote_data({p1_uid: u'abstain', p2_uid: u'yes'}, notify = False)
+        v1.set_vote_data({p1_uid: u'abstain', p2_uid: u'approve'}, notify = False)
         poll['v1'] = v1
         v2 = Vote(creators = ['two'])
-        v2.set_vote_data({p1_uid: u'yes', p2_uid: u'no'}, notify = False)
+        v2.set_vote_data({p1_uid: u'approve', p2_uid: u'deny'}, notify = False)
         poll['v2'] = v2
         v3 = Vote(creators = ['three'])
-        v3.set_vote_data({p1_uid: u'yes'}, notify = False)
+        v3.set_vote_data({p1_uid: u'approve'}, notify = False)
         poll['v3'] = v3
         v4 = Vote(creators = ['four'])
-        v4.set_vote_data({p1_uid: u'yes'}, notify = False)
+        v4.set_vote_data({p1_uid: u'approve'}, notify = False)
         poll['v4'] = v4
 
     def test_verify_class(self):
@@ -86,7 +86,7 @@ class CombinedSimplePollTests(unittest.TestCase):
         ai = poll.__parent__
         p1_uid = ai['prop1'].uid
         p2_uid = ai['prop2'].uid
-        expected = {p1_uid: {u'yes': 3, u'abstain': 1, u'no': 0}, p2_uid: {u'yes': 1, u'abstain': 0, u'no': 1}}
+        expected = {p1_uid: {u'approve': 3, u'abstain': 1, u'deny': 0}, p2_uid: {u'approve': 1, u'abstain': 0, u'deny': 1}}
         self.assertEqual(poll.poll_result, expected)
 
     def test_render_result(self):
@@ -125,8 +125,8 @@ class CombinedSimplePollTests(unittest.TestCase):
         p2_uid = ai['prop2'].uid
         obj = self._cut(poll)
         self._add_votes(poll)
-        poll['v3'].set_vote_data({p2_uid: u'no'}, notify = False)
-        poll['v4'].set_vote_data({p2_uid: u'no'}, notify = False)
+        poll['v3'].set_vote_data({p2_uid: u'deny'}, notify = False)
+        poll['v4'].set_vote_data({p2_uid: u'deny'}, notify = False)
         unrestricted_wf_transition_to(poll, 'ongoing')
         unrestricted_wf_transition_to(poll, 'closed')
 

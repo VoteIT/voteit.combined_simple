@@ -1,11 +1,8 @@
 from deform.widget import RadioChoiceWidget
 
 
-class YesNoAbstainWidget(RadioChoiceWidget):
+class CombinedSimpleWidget(RadioChoiceWidget):
     """ VoteIT poll style widget
     """
-    template = 'yes_no_abstain'
-    readonly_template = 'yes_no_abstain_readonly'
-
-#    def __init__(self, **kw):
-#        super(YesNoAbstainWidget, self).__init__(**kw)
+    template = 'combined_simple'
+    readonly_template = 'combined_simple_readonly'

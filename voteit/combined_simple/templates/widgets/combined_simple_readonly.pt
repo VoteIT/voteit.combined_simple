@@ -2,7 +2,7 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="voteit.combined_simple"
     tal:define="api field.widget.api;">
-<div id="${field.oid}" class="deformSet yes_no_abstain_widget col-65-35">
+<div id="${field.oid}" class="deformSet combined_simple_widget col-65-35">
     <div class="column column-1">
         <tal:proposal 
             replace="structure api.render_single_view_component(api.context, api.request, 'proposal', 'block', brain=field.widget.proposal)">

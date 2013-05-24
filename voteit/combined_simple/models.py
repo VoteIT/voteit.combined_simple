@@ -8,7 +8,7 @@ from pyramid.traversal import find_root
 from voteit.core.models.poll_plugin import PollPlugin
 
 from . import CombinedTSF as _
-from .widgets import YesNoAbstainWidget
+from .widgets import CombinedSimpleWidget
 
 
 class CombinedSimplePoll(PollPlugin):
@@ -16,7 +16,7 @@ class CombinedSimplePoll(PollPlugin):
     name = u'combined_simple'
     title = _(u"Combined simple")
     description = _(u"combined_simple_description", 
-                    default = u"Users may vote Yes / No / Abstain on each proposal within this poll, "
+                    default = u"Users may vote Approve / Deny / Abstain on each proposal within this poll, "
                               u"and each will be treated individually.")
     
     def get_vote_schema(self, request = None, api = None):
@@ -33,14 +33,14 @@ class CombinedSimplePoll(PollPlugin):
         else:
             poll_title = _(u"You can't change your vote now.")
         schema = colander.Schema(title = poll_title)
-        choices = (('yes', _(u"Yes")), ('no', _(u"No")), ('abstain', _(u"Abstain")))
+        choices = (('approve', _(u"Approve")), ('deny', _(u"Deny")), ('abstain', _(u"Abstain")))
         for proposal in proposals:
             schema.add(colander.SchemaNode(colander.String(),
                                            name = proposal['uid'],
                                            missing = u"",
                                            title = proposal['title'],
                                            validator = colander.OneOf([x[0] for x in choices]),
-                                           widget = YesNoAbstainWidget(values = choices,
+                                           widget = CombinedSimpleWidget(values = choices,
                                                                        proposal = proposal,
                                                                        api = api,)))
         return schema
@@ -53,7 +53,7 @@ class CombinedSimplePoll(PollPlugin):
         if ballots:
             for (ballot, count) in ballots:
                 for (p_uid, choice) in ballot.items():
-                    prop = results.setdefault(p_uid, {u'yes': 0, u'no': 0, u'abstain': 0})
+                    prop = results.setdefault(p_uid, {u'approve': 0, u'deny': 0, u'abstain': 0})
                     prop[choice] += count
         self.context.poll_result = results
         
@@ -70,8 +70,8 @@ class CombinedSimplePoll(PollPlugin):
     def change_states_of(self):
         results = {}
         for (uid, result) in self.context.poll_result.items():
-            if result['yes'] > result['no']:
+            if result['approve'] > result['deny']:
                 results[uid] = 'approved'
-            if result['no'] > result['yes']:
+            if result['deny'] > result['approve']:
                 results[uid] = 'denied'
         return results
