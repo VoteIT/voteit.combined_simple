@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: voteit.combined_simple 0.1dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-04-12 09:20+0200\n"
+"POT-Creation-Date: 2013-05-24 11:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,13 +16,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: voteit/combined_simple/models.py:10
+#: voteit/combined_simple/models.py:17
 msgid "Combined simple"
 msgstr ""
 
-#. Default: Users may vote Yes / No / Abstain on each proposal within this
-#. poll, and each will be treated individually.
-#: voteit/combined_simple/models.py:11
+#. Default: Users may vote Approve / Deny / Abstain on each proposal within
+#. this poll, and each will be treated individually.
+#: voteit/combined_simple/models.py:18
 msgid "combined_simple_description"
+msgstr ""
+
+#: voteit/combined_simple/models.py:32
+msgid "Vote"
+msgstr ""
+
+#: voteit/combined_simple/models.py:34
+msgid "You can't change your vote now."
+msgstr ""
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:5
+msgid "Approve"
+msgstr ""
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:6
+msgid "Deny"
+msgstr ""
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:7
+msgid "Abstain"
 msgstr ""
 

@@ -8,23 +8,48 @@ msgid ""
 msgstr ""
 "Project-Id-Version: voteit.combined_simple 0.1dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2013-04-12 09:20+0200\n"
-"PO-Revision-Date: 2013-04-12 09:21+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2013-05-24 11:22+0200\n"
+"PO-Revision-Date: 2013-05-24 11:24+0100\n"
+"Last-Translator: Robin Harms Oredsson <robin@betahaus.net>\n"
 "Language-Team: sv <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
+"X-Generator: Poedit 1.5.5\n"
 
-#: voteit/combined_simple/models.py:10
+#: voteit/combined_simple/models.py:17
 msgid "Combined simple"
-msgstr ""
+msgstr "Kombinerad enkel"
 
-#. Default: Users may vote Yes / No / Abstain on each proposal within this
-#. poll, and each will be treated individually.
-#: voteit/combined_simple/models.py:11
+#. Default: Users may vote Approve / Deny / Abstain on each proposal within
+#. this poll, and each will be treated individually.
+#: voteit/combined_simple/models.py:18
 msgid "combined_simple_description"
 msgstr ""
+"Deltagare kan rösta Bifall / Avslag / Avstå på varje förslag i omröstningen, "
+"och varje hanteras individuellt."
 
+#: voteit/combined_simple/models.py:32
+msgid "Vote"
+msgstr "Röst"
+
+#: voteit/combined_simple/models.py:34
+msgid "You can't change your vote now."
+msgstr "Du kan inte ändra din röst nu."
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:5
+msgid "Approve"
+msgstr "Bifall"
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:6
+msgid "Deny"
+msgstr "Avslag"
+
+#: voteit/combined_simple/models.py:36
+#: voteit/combined_simple/templates/result.pt:7
+msgid "Abstain"
+msgstr "Avstå"
