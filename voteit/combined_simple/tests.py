@@ -32,8 +32,9 @@ class CombinedSimplePollTests(unittest.TestCase):
         return CombinedSimplePoll
 
     def _fixture(self):
-        self.config.include('voteit.combined_simple')
+        self.config.include('voteit.core.models.fanstatic_resources')
         self.config.include('voteit.core.testing_helpers.register_catalog')
+        self.config.include('voteit.combined_simple')
         self.config.testing_securitypolicy(userid='mr_tester')
         root = active_poll_fixture(self.config)
         self.config.include('voteit.core.testing_helpers.register_security_policies')
@@ -66,6 +67,7 @@ class CombinedSimplePollTests(unittest.TestCase):
         self.failUnless(verifyObject(IPollPlugin, self._cut(None)))
 
     def test_integration(self):
+        self.config.include('voteit.core')
         self.config.include('voteit.combined_simple')
         poll = Poll()
         self.failUnless(self.config.registry.queryAdapter(poll, IPollPlugin, name = u'combined_simple'))
