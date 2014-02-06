@@ -13,6 +13,6 @@ cs_group = Group((cs_styles, cs_script))
 def includeme(config):
     """ Include fanstatic resources. """
     from voteit.core.models.interfaces import IFanstaticResources
-    from voteit.core.fanstaticlib import is_agenda_item
+    from voteit.core.fanstaticlib import is_votable_context
     util = config.registry.getUtility(IFanstaticResources)
-    util.add('combined_simple_group', cs_group, is_agenda_item)
+    util.add('combined_simple_group', cs_group, is_votable_context)
