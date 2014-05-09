@@ -50,11 +50,13 @@ class CombinedSimplePoll(PollPlugin):
         """
         ballots = self.context.ballots
         results = {}
+        valid_choices = ('approve', 'deny', 'abstain')
         if ballots:
             for (ballot, count) in ballots:
                 for (p_uid, choice) in ballot.items():
-                    prop = results.setdefault(p_uid, {u'approve': 0, u'deny': 0, u'abstain': 0})
-                    prop[choice] += count
+                        prop = results.setdefault(p_uid, {u'approve': 0, u'deny': 0, u'abstain': 0})
+                        if choice in valid_choices:
+                            prop[choice] += count
         self.context.poll_result = results
         
     def render_result(self, request, api, complete=True):
