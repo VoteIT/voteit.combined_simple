@@ -2,13 +2,20 @@ import colander
 import deform
 from repoze.catalog.query import Any
 from pyramid.renderers import render
-#from pyramid.response import Response
-from pyramid.traversal import find_root
-
+from pyramid.traversal import find_root, find_resource
 from voteit.core.models.poll_plugin import PollPlugin
+from deform.widget import RadioChoiceWidget
 
-from . import CombinedTSF as _
-from .widgets import CombinedSimpleWidget
+from voteit.combined_simple import _
+
+
+_CHOICES = (('approve', _(u"Approve")), ('deny', _(u"Deny")), ('abstain', _(u"Abstain")))
+_CHOICE_ICON = {'approve': 'glyphicon glyphicon-approved',
+                'deny': 'glyphicon glyphicon-denied',
+                'abstain': 'glyphicon glyphicon-canceled'}
+_CHOICE_TEXT_CLASS = {'approve': 'text-success',
+                      'deny': 'text-danger',
+                      'abstain': 'text-warning'}
 
 
 class CombinedSimplePoll(PollPlugin):
@@ -19,30 +26,38 @@ class CombinedSimplePoll(PollPlugin):
                     default = u"Users may vote Approve / Deny / Abstain on each proposal within this poll, "
                               u"and each will be treated individually.")
     
-    def get_vote_schema(self, request = None, api = None):
+    def get_vote_schema(self):
         """ Get an instance of the schema that this poll uses.
         """
         root = find_root(self.context)
-        get_metadata = root.catalog.document_map.get_metadata
-        num, results = root.catalog.query(Any('uid', self.context.proposal_uids), sort_index = 'created')
-        proposals = [get_metadata(x) for x in results]
+        proposal_docids = root.catalog.query(Any('uid', self.context.proposal_uids), sort_index = 'created')[1]
+        proposals = []
+        for docid in proposal_docids:
+            path = root.document_map.address_for_docid(docid)
+            obj = find_resource(root, path)
+            if obj:
+                proposals.append(obj)
         #Choices should be something iterable with the contents [(UID for proposal, Title of proposal), <etc...>, ]
         poll_wf_state = self.context.get_workflow_state()
         if poll_wf_state == 'ongoing':
             poll_title = _(u"Vote")
         else:
             poll_title = _(u"You can't change your vote now.")
-        schema = colander.Schema(title = poll_title)
-        choices = (('approve', _(u"Approve")), ('deny', _(u"Deny")), ('abstain', _(u"Abstain")))
+        schema = colander.Schema(title = poll_title,
+                                 widget = deform.widget.FormWidget(template = 'form_modal',
+                                                                   readonly_template = 'readonly/form_modal'))
         for proposal in proposals:
             schema.add(colander.SchemaNode(colander.String(),
-                                           name = proposal['uid'],
+                                           name = proposal.uid,
                                            missing = u"",
-                                           title = proposal['title'],
-                                           validator = colander.OneOf([x[0] for x in choices]),
-                                           widget = CombinedSimpleWidget(values = choices,
-                                                                       proposal = proposal,
-                                                                       api = api,)))
+                                           title = proposal.title,
+                                           validator = colander.OneOf([x[0] for x in _CHOICES]),
+                                           widget = RadioChoiceWidget(values = _CHOICES,
+                                                                      proposal = proposal,
+                                                                      choice_text_class = _CHOICE_TEXT_CLASS,
+                                                                      choice_icon = _CHOICE_ICON,
+                                                                      template = 'combined_simple',
+                                                                      readonly_template = 'combined_simple_readonly')))
         return schema
 
     def handle_close(self):
@@ -59,15 +74,12 @@ class CombinedSimplePoll(PollPlugin):
                             prop[choice] += count
         self.context.poll_result = results
         
-    def render_result(self, request, api, complete=True):
-        get_metadata = api.root.catalog.document_map.get_metadata
-        results = api.root.catalog.query(Any('uid', self.context.proposal_uids), sort_index = 'created')[1]
+    def render_result(self, view):
         response = {}
-        response['proposals'] = [get_metadata(x) for x in results]
-        response['api'] = api
+        response['proposals'] = self.context.get_proposal_objects()
         response['context'] = self.context
-        response['complete'] = complete
-        return render('templates/result.pt', response, request=request)
+
+        return render('voteit.combined_simple:templates/result.pt', response, request=view.request)
 
     def change_states_of(self):
         results = {}
@@ -77,3 +89,7 @@ class CombinedSimplePoll(PollPlugin):
             if result['deny'] > result['approve']:
                 results[uid] = 'denied'
         return results
+
+
+def includeme(config):
+    config.registry.registerAdapter(CombinedSimplePoll, name = CombinedSimplePoll.name)

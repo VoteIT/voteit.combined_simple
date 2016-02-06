@@ -1,28 +1,33 @@
 <tal:main
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="voteit.combined_simple"
-    tal:define="api field.widget.api;">
-<div id="${field.oid}" class="deformSet combined_simple_widget col-65-35">
-    <input type="hidden" name="__start__" value="${field.name}:rename"/>
-    <div class="column column-1">
-        <tal:proposal 
-            replace="structure api.render_single_view_component(api.context, api.request, 'proposal', 'block', brain=field.widget.proposal)">
-            Proposal
-        </tal:proposal>
-    </div>
-    <div class="column column-2">
-        <tal:loop tal:repeat="choice field.widget.values">
-            <label for="${field.oid}-${repeat.choice.index}"
-                   tal:attributes="class cstruct == choice[0] and 'selected enabled votecontrol %s' % choice[0] or 'enabled votecontrol %s' % choice[0]">${choice[1]}</label>
-            <input tal:attributes="checked choice[0] == cstruct;"
+    i18n:domain="voteit.combined_simple">
+  <div class="text-right">
+    ${field.start_rename()}
+    <div tal:define="oid oid|field.oid;
+                     css_class css_class|field.widget.css_class;
+                     style style|field.widget.style;
+                     inline getattr(field.widget, 'inline', False);
+                     choice_icon field.widget.choice_icon;
+                     choice_text_class field.widget.choice_text_class;"
+         class="btn-group" data-toggle="buttons">
+      <tal:iter tal:repeat="choice values | field.widget.values">
+        <label for="${oid}-${repeat.choice.index}"
+               tal:define="(value, title) choice"
+               class="btn btn-default ${value == cstruct and 'active'}">
+          <input tal:attributes="checked value == cstruct;
+                                 class css_class;
+                                 style style;"
                  type="radio"
-                 name="${field.oid}"
-                 title="${choice[1]}"
-                 value="${choice[0]}"
-                 id="${field.oid}-${repeat.choice.index}" />
-        </tal:loop>
+                 name="${oid}"
+                 value="${value}"
+                 id="${oid}-${repeat.choice.index}"/>
+          <span class="${choice_text_class.get(value, '')}">
+            <span class="${choice_icon.get(value, '')}"></span>
+            ${title}
+          </span>
+        </label>
+      </tal:iter>
     </div>
-    <input type="hidden" name="__end__"/>
-    <div class="clear"><!-- --></div>
-</div>
+    ${field.end_rename()}
+  </div>
 </tal:main>

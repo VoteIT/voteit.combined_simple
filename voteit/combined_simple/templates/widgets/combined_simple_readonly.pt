@@ -1,19 +1,34 @@
 <tal:main
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="voteit.combined_simple"
-    tal:define="api field.widget.api;">
-<div id="${field.oid}" class="deformSet combined_simple_widget col-65-35">
-    <div class="column column-1">
-        <tal:proposal 
-            replace="structure api.render_single_view_component(api.context, api.request, 'proposal', 'block', brain=field.widget.proposal)">
-            Proposal
-        </tal:proposal>
+    i18n:domain="voteit.combined_simple">
+  <div class="text-right">
+    ${field.start_rename()}
+    <div tal:define="oid oid|field.oid;
+                     css_class css_class|field.widget.css_class;
+                     style style|field.widget.style;
+                     inline getattr(field.widget, 'inline', False);
+                     choice_icon field.widget.choice_icon;
+                     choice_text_class field.widget.choice_text_class;"
+         class="btn-group" data-toggle="buttons">
+      <tal:iter tal:repeat="choice values | field.widget.values">
+        <label for="${oid}-${repeat.choice.index}"
+               tal:define="(value, title) choice"
+               tal:condition="value == cstruct"
+               class="btn btn-default disabled">
+          <input tal:attributes="checked value == cstruct;
+                                 class css_class;
+                                 style style;"
+                 type="radio"
+                 name="${oid}"
+                 value="${value}"
+                 id="${oid}-${repeat.choice.index}"/>
+          <span class="${choice_text_class.get(value, '')}">
+            <span class="${choice_icon.get(value, '')}"></span>
+            ${title}
+          </span>
+        </label>
+      </tal:iter>
     </div>
-    <div class="column column-2">
-        <tal:loop tal:repeat="choice field.widget.values">
-            <span tal:attributes="class cstruct == choice[0] and 'selected votecontrol %s' % choice[0] or 'votecontrol %s' % choice[0]">${choice[1]}</span>
-        </tal:loop>
-    </div>
-    <div class="clear"><!-- --></div>
-</div>
+    ${field.end_rename()}
+  </div>
 </tal:main>
