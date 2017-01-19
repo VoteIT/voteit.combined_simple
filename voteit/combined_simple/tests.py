@@ -1,23 +1,19 @@
 import unittest
 
-import colander
 from pyramid import testing
+from pyramid.traversal import find_root
 from zope.interface.verify import verifyObject
 from zope.interface.verify import verifyClass
-
-from voteit.core.models.agenda_item import AgendaItem
-from voteit.core.models.meeting import Meeting
+from arche.testing import init_request_methods
+from arche.views.base import BaseView
 from voteit.core.models.poll import Poll
-from voteit.core.models.poll_plugin import PollPlugin
-from voteit.core.models.proposal import Proposal
 from voteit.core.models.interfaces import IPollPlugin
-from voteit.core.models.interfaces import IVote
 from voteit.core.security import unrestricted_wf_transition_to
-from voteit.core.views.api import APIView
 from voteit.core.testing_helpers import active_poll_fixture
 
 
 class CombinedSimplePollTests(unittest.TestCase):
+
 
     def setUp(self):
         request = testing.DummyRequest()
@@ -32,14 +28,20 @@ class CombinedSimplePollTests(unittest.TestCase):
         return CombinedSimplePoll
 
     def _fixture(self):
-        self.config.include('voteit.core.models.fanstatic_resources')
+        self.config.include('pyramid_chameleon')
+        self.config.testing_securitypolicy(userid='admin')
+        self.config.include('arche.testing')
+        self.config.include('arche.testing.workflow')
         self.config.include('voteit.core.testing_helpers.register_catalog')
+        self.config.include('voteit.core.helpers')
         self.config.include('voteit.combined_simple')
         self.config.testing_securitypolicy(userid='mr_tester')
         root = active_poll_fixture(self.config)
-        self.config.include('voteit.core.testing_helpers.register_security_policies')
+        #Enable workflows
+        self.config.include('voteit.core.testing_helpers.register_workflows')
+        #self.config.include('voteit.core.testing_helpers.register_security_policies')
         poll = root['meeting']['ai']['poll']
-        poll.set_field_value('poll_plugin', 'combined_simple')
+        poll.poll_plugin = 'combined_simple'
         return poll
 
     def _add_votes(self, poll):
@@ -82,7 +84,6 @@ class CombinedSimplePollTests(unittest.TestCase):
         poll = self._fixture()
         obj = self._cut(poll)
         self._add_votes(poll)
-        request = testing.DummyRequest()
         unrestricted_wf_transition_to(poll, 'ongoing')
         unrestricted_wf_transition_to(poll, 'closed')
         ai = poll.__parent__
@@ -92,19 +93,19 @@ class CombinedSimplePollTests(unittest.TestCase):
         self.assertEqual(poll.poll_result, expected)
 
     def test_render_result(self):
-        self.config.scan('voteit.core.views.components')
         poll = self._fixture()
         obj = self._cut(poll)
         self._add_votes(poll)
-        request = testing.DummyRequest()
         unrestricted_wf_transition_to(poll, 'ongoing')
         unrestricted_wf_transition_to(poll, 'closed')
         ai = poll.__parent__
         p1_uid = ai['prop1'].uid
         p2_uid = ai['prop2'].uid
         request = testing.DummyRequest()
-        api = APIView(poll, request)
-        result = obj.render_result(request, api)
+        init_request_methods(request)
+        request.root = find_root(poll)
+        view = BaseView(poll, request)
+        result = obj.render_result(view)
         self.assertIn('Proposal 1', result)
 
     def test_change_states_of(self):
@@ -131,7 +132,6 @@ class CombinedSimplePollTests(unittest.TestCase):
         poll['v4'].set_vote_data({p2_uid: u'deny'}, notify = False)
         unrestricted_wf_transition_to(poll, 'ongoing')
         unrestricted_wf_transition_to(poll, 'closed')
-
         result = obj.change_states_of()
         self.assertEqual(result, {p1_uid: 'approved', p2_uid: 'denied'})
 
