@@ -12,4 +12,4 @@ install:
   - pip install zc.buildout
   - travis_retry buildout
 
-script: py setup.py test -q
+script: bin/py setup.py test -q
