@@ -29,14 +29,7 @@ class CombinedSimplePoll(PollPlugin):
     def get_vote_schema(self):
         """ Get an instance of the schema that this poll uses.
         """
-        root = find_root(self.context)
-        proposal_docids = root.catalog.query(Any('uid', self.context.proposal_uids), sort_index = 'created')[1]
-        proposals = []
-        for docid in proposal_docids:
-            path = root.document_map.address_for_docid(docid)
-            obj = find_resource(root, path)
-            if obj:
-                proposals.append(obj)
+        proposals = self.context.get_proposal_objects()
         #Choices should be something iterable with the contents [(UID for proposal, Title of proposal), <etc...>, ]
         poll_wf_state = self.context.get_workflow_state()
         if poll_wf_state == 'ongoing':
