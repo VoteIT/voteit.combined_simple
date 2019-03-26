@@ -46,11 +46,11 @@ class CombinedSimplePoll(PollPlugin):
                 colander.String(),
                 name=proposal.uid,
                 missing=u"",
-                title=proposal.title,
+                title="#%s" % proposal.aid,
                 validator=colander.OneOf([x[0] for x in _CHOICES]),
+                proposal=proposal,
                 widget=RadioChoiceWidget(
                     values=_CHOICES,
-                    proposal=proposal,
                     choice_text_class=_CHOICE_TEXT_CLASS,
                     choice_icon=_CHOICE_ICON,
                     template='combined_simple',

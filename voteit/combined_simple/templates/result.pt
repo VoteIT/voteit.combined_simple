@@ -7,35 +7,33 @@
     <tal:ts replace="context.title" i18n:name="title" />
   </h4>
 </div>
-<div class="modal-body">
-  <div class="list-group">
-  <tal:iterate repeat="proposal proposals">
-    <div class="list-group-item" tal:define="result context.poll_result[proposal.uid]">
-      <tal:creator replace="structure request.creators_info(proposal.creators, portrait = False)" />
-      ${proposal.text}
-      <p><strong>#${proposal.aid}</strong></p>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="text-approved">
-            <span class="glyphicon glyphicon-approved"></span>
-            <tal:trans i18n:translate="">Approve</tal:trans>: ${result['approve']}
-          </div>
+<div class="list-group">
+<tal:iterate repeat="proposal proposals">
+  <div class="list-group-item" tal:define="result context.poll_result[proposal.uid]">
+    <tal:creator replace="structure request.creators_info(proposal.creators, portrait = False)" />
+    ${proposal.text}
+    <p><strong>#${proposal.aid}</strong></p>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="text-approved">
+          <span class="glyphicon glyphicon-approved"></span>
+          <tal:trans i18n:translate="">Approve</tal:trans>: ${result['approve']}
         </div>
-        <div class="col-sm-4">
-          <div class="text-denied">
-            <span class="glyphicon glyphicon-denied"></span>
-            <tal:trans i18n:translate="">Deny</tal:trans>: ${result['deny']}
-          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="text-denied">
+          <span class="glyphicon glyphicon-denied"></span>
+          <tal:trans i18n:translate="">Deny</tal:trans>: ${result['deny']}
         </div>
-        <div class="col-sm-4">
-          <div class="text-warning">
-            <span class="glyphicon glyphicon-canceled"></span>
-            <tal:trans i18n:translate="">Abstain</tal:trans>: ${result['abstain']}
-          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="text-warning">
+          <span class="glyphicon glyphicon-canceled"></span>
+          <tal:trans i18n:translate="">Abstain</tal:trans>: ${result['abstain']}
         </div>
       </div>
     </div>
-  </tal:iterate>
   </div>
+</tal:iterate>
 </div>
 </tal:main>

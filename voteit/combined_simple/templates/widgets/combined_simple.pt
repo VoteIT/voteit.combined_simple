@@ -1,7 +1,7 @@
 <tal:main
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     i18n:domain="voteit.combined_simple">
-  <div class="text-right">
+  <div class="form-group">
     ${field.start_rename()}
     <div tal:define="oid oid|field.oid;
                      css_class css_class|field.widget.css_class;
@@ -30,4 +30,6 @@
     </div>
     ${field.end_rename()}
   </div>
+  <div tal:content="structure field.request.render_proposal_text(field.schema.proposal)"></div>
+  <p>&nbsp;</p>
 </tal:main>
