@@ -1,54 +1,61 @@
 #
 # SOME DESCRIPTIVE TITLE
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE 1.0\n"
-"POT-Creation-Date: 2016-02-06 12:26+0100\n"
+"POT-Creation-Date: 2020-04-23 10:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"Generated-By: Lingua 4.7\n"
+"Generated-By: Lingua 4.14\n"
 
-#: ././voteit/combined_simple/models.py:12
-#: ././voteit/combined_simple/templates/result.pt:21
+#: ./voteit/combined_simple/models.py:10
+#: ./voteit/combined_simple/templates/result.pt:20
 msgid "Approve"
 msgstr ""
 
-#: ././voteit/combined_simple/models.py:12
-#: ././voteit/combined_simple/templates/result.pt:27
+#: ./voteit/combined_simple/models.py:10
+#: ./voteit/combined_simple/templates/result.pt:26
 msgid "Deny"
 msgstr ""
 
-#: ././voteit/combined_simple/models.py:12
-#: ././voteit/combined_simple/templates/result.pt:33
+#: ./voteit/combined_simple/models.py:10
+#: ./voteit/combined_simple/templates/result.pt:32
 msgid "Abstain"
 msgstr ""
 
-#: ././voteit/combined_simple/models.py:24
+#: ./voteit/combined_simple/models.py:22
 msgid "Combined simple"
 msgstr ""
 
 #. Default: Users may vote Approve / Deny / Abstain on each proposal within
-#. this poll, and each will be treated individually.
-#: ././voteit/combined_simple/models.py:25
+#. this poll, and each will be treated individually. Remember that you can't
+#. use this method to determine order or to for instance elect a board.
+#: ./voteit/combined_simple/models.py:23
 msgid "combined_simple_description"
 msgstr ""
 
-#: ././voteit/combined_simple/models.py:43
+#. Default: Situations where each individual proposal could be approved or
+#. rejected independent of each other.
+#: ./voteit/combined_simple/models.py:29
+msgid "recommended_for"
+msgstr ""
+
+#: ./voteit/combined_simple/models.py:41
 msgid "Vote"
 msgstr ""
 
-#: ././voteit/combined_simple/models.py:45
+#: ./voteit/combined_simple/models.py:43
 msgid "You can't change your vote now."
 msgstr ""
 
-#: ././voteit/combined_simple/templates/result.pt:5
+#: ./voteit/combined_simple/templates/result.pt:5
 msgid "Results of ${title}"
 msgstr ""

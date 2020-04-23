@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: voteit.combined_simple 0.1dev\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-02-06 12:26+0100\n"
-"PO-Revision-Date: 2016-02-06 12:28+0100\n"
+"POT-Creation-Date: 2020-04-23 10:24+0200\n"
+"PO-Revision-Date: 2020-04-23 10:26+0200\n"
 "Last-Translator: Robin Harms Oredsson <robin@betahaus.net>\n"
 "Language-Team: sv <LL@li.org>\n"
 "Language: sv\n"
@@ -18,40 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 0.9.6\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.3\n"
 
-#: voteit/combined_simple/models.py:12
-#: voteit/combined_simple/templates/result.pt:21
+#: voteit/combined_simple/models.py:10
+#: voteit/combined_simple/templates/result.pt:20
 msgid "Approve"
 msgstr "Bifall"
 
-#: voteit/combined_simple/models.py:12
-#: voteit/combined_simple/templates/result.pt:27
+#: voteit/combined_simple/models.py:10
+#: voteit/combined_simple/templates/result.pt:26
 msgid "Deny"
 msgstr "Avslag"
 
-#: voteit/combined_simple/models.py:12
-#: voteit/combined_simple/templates/result.pt:33
+#: voteit/combined_simple/models.py:10
+#: voteit/combined_simple/templates/result.pt:32
 msgid "Abstain"
 msgstr "Avstå"
 
-#: voteit/combined_simple/models.py:24
+#: voteit/combined_simple/models.py:22
 msgid "Combined simple"
 msgstr "Kombinerad enkel"
 
 #. Default: Users may vote Approve / Deny / Abstain on each proposal within
-#. this poll, and each will be treated individually.
-#: voteit/combined_simple/models.py:25
+#. this poll, and each will be treated individually. Remember that you can't
+#. use this method to determine order or to for instance elect a board.
+#: voteit/combined_simple/models.py:23
 msgid "combined_simple_description"
 msgstr ""
 "Deltagare kan rösta Bifall / Avslag / Avstå på varje förslag i omröstningen, "
-"och varje hanteras individuellt."
+"och varje hanteras individuellt. Kom ihåg att du inte kan använda denna "
+"metod för att avgöra ordning eller ställa förslag mot varandra, t.ex. i ett "
+"styrelseval."
 
-#: voteit/combined_simple/models.py:43
+#. Default: Situations where each individual proposal could be approved or
+#. rejected independent of each other.
+#: voteit/combined_simple/models.py:29
+msgid "recommended_for"
+msgstr ""
+"Situationer där varje förslag kan bifallas eller avslås oberoende av "
+"varandra."
+
+#: voteit/combined_simple/models.py:41
 msgid "Vote"
 msgstr "Röst"
 
-#: voteit/combined_simple/models.py:45
+#: voteit/combined_simple/models.py:43
 msgid "You can't change your vote now."
 msgstr "Du kan inte ändra din röst nu."
 

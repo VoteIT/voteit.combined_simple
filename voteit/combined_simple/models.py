@@ -18,11 +18,18 @@ _CHOICE_TEXT_CLASS = {'approve': 'text-success',
 
 class CombinedSimplePoll(PollPlugin):
     """ Poll plugin for combined simple polls. """
-    name = u'combined_simple'
-    title = _(u"Combined simple")
-    description = _(u"combined_simple_description",
-                    default=u"Users may vote Approve / Deny / Abstain on each proposal within this poll, "
-                            u"and each will be treated individually.")
+    name = 'combined_simple'
+    title = _("Combined simple")
+    description = _("combined_simple_description",
+                    default="Users may vote Approve / Deny / Abstain on each proposal within this poll, "
+                            "and each will be treated individually. "
+                            "Remember that you can't use this method to determine "
+                            "order or to for instance elect a board.")
+    multiple_winners = True
+    recommended_for = _("recommended_for",
+                        default="Situations where each individual proposal could "
+                                "be approved or rejected independent of each other.")
+    priority = 100
 
     def get_vote_schema(self):
         """ Get an instance of the schema that this poll uses.
