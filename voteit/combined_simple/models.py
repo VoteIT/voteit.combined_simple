@@ -52,7 +52,6 @@ class CombinedSimplePoll(PollPlugin):
             schema.add(colander.SchemaNode(
                 colander.String(),
                 name=proposal.uid,
-                missing=u"",
                 title="#%s" % proposal.aid,
                 validator=colander.OneOf([x[0] for x in _CHOICES]),
                 proposal=proposal,
